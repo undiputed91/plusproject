@@ -1,8 +1,12 @@
 package com.sparta.plusproject.user;
 
+import com.sparta.plusproject.post.Post;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -18,6 +22,9 @@ public class User {
 
     @Column
     private String password;
+
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts = new ArrayList<>();
 
     public User(UserRequestDto userRequestDto) {
         this.username = userRequestDto.getUsername();
