@@ -40,4 +40,12 @@ public class PostService {
         }
         post.update(postRequestDto);
     }
+
+    public void deletePost(Long id, UserDetailsImpl userDetails) {
+        Post post = postRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 게시글이 없습니다."));
+        if(!Objects.equals(post.getUser().getId(), userDetails.getUser().getId())){
+            throw new IllegalArgumentException("게시글 작성자만 삭제 가능합니다.");
+        }
+        postRepository.delete(post);
+    }
 }
