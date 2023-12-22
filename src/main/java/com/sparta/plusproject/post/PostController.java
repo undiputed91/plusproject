@@ -30,6 +30,11 @@ public class PostController {
 
     @GetMapping
     public List<PostListResponseDto> getPostList(){
-           return  postService.getPostList();
+         return  postService.getPostList();
+    }
+
+    @GetMapping("/{id}")
+    public PostResponseDto getPost(@PathVariable Long id){
+        return postService.getPost(id);
     }
 }

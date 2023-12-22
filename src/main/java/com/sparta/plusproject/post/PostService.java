@@ -24,4 +24,9 @@ public class PostService {
         }
         return responseList;
     }
+
+    public PostResponseDto getPost(Long id) {
+        Post post = postRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 게시글이 없습니다."));
+        return new PostResponseDto(post);
+    }
 }
