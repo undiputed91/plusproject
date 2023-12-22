@@ -24,7 +24,7 @@ public class PostController {
             postService.writePost(postRequestDto,userDetails);
             return ResponseEntity.ok().body(new CommonResponseDto("게시글 작성완료", HttpStatus.OK.value()));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(new CommonResponseDto(e.getMessage(),HttpStatus.BAD_REQUEST.value()));
+            return ResponseEntity.badRequest().body(new CommonResponseDto(e.getMessage(), HttpStatus.BAD_REQUEST.value()));
         }
     }
 

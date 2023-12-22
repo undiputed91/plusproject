@@ -27,7 +27,7 @@ public class Post extends Timestamped {
     private String contents;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(mappedBy = "post")
@@ -36,7 +36,7 @@ public class Post extends Timestamped {
     public Post(PostRequestDto postRequestDto, UserDetailsImpl userDetails) {
         this.title = postRequestDto.getTitle();
         this.contents = postRequestDto.getContents();
-        this.user= userDetails.getUser();
+        this.user = userDetails.getUser();
     }
 
     public void update(PostRequestDto postRequestDto) {

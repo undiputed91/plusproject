@@ -27,7 +27,7 @@ public class Comment {
     private Post post;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     public Comment(Post post, CommentRequestDto commentRequestDto, UserDetailsImpl userDetails) {

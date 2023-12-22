@@ -31,8 +31,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         String token = jwtUtil.resolveToken(request);
 
-        if(Objects.nonNull(token)) {
-            if(jwtUtil.validateToken(token)) {
+        if (Objects.nonNull(token)) {
+            if (jwtUtil.validateToken(token)) {
                 Claims info = jwtUtil.getUserInfoFromToken(token);
 
                 // 인증정보에 요저정보(username) 넣기

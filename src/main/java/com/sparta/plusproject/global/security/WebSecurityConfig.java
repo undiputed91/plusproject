@@ -19,14 +19,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
-    private  final JwtUtil jwtUtil;
+    private final JwtUtil jwtUtil;
 
     private final UserDetailsService userDetailsService;
 
     private final ObjectMapper objectMapper;
 
     @Bean
-    public AuthenticationManager authenticationManger(AuthenticationConfiguration configuration) throws  Exception{
+    public AuthenticationManager authenticationManger(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
 
@@ -37,17 +37,18 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf((csrf)->csrf.disable());
+        http.csrf((csrf) -> csrf.disable());
 
-        http.sessionManagement((sessionManagement)->
+        http.sessionManagement((sessionManagement) ->
                 sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         );
 
-        http.authorizeHttpRequests((authorizeHttpRequests)->
+        http.authorizeHttpRequests((authorizeHttpRequests) ->
                 authorizeHttpRequests.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                .requestMatchers(HttpMethod.POST,"/v1/users/**").permitAll()
-                .requestMatchers(HttpMethod.GET,"/v1/posts/**").permitAll()
-                .anyRequest().authenticated()
+                        .requestMatchers(HttpMethod.POST, "/v1/users/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/v1/users/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/v1/posts/**").permitAll()
+                        .anyRequest().authenticated()
         );
 
         http.addFilterBefore(jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);

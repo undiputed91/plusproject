@@ -1,6 +1,5 @@
 package com.sparta.plusproject.post;
 
-import com.sparta.plusproject.comment.Comment;
 import com.sparta.plusproject.comment.CommentResponseDto;
 import lombok.Getter;
 
