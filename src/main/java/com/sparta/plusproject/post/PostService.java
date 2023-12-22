@@ -6,6 +6,10 @@ import com.sparta.plusproject.comment.CommentResponseDto;
 import com.sparta.plusproject.global.security.UserDetailsImpl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,13 +27,14 @@ public class PostService {
         postRepository.save(post);
     }
 
-    public List<PostListResponseDto> getPostList() {
-        List<Post> postList = postRepository.findAllByOrderByCreatedAtDesc();
-        List<PostListResponseDto> responseList = new ArrayList<>();
-        for (Post post : postList) {
-            responseList.add(new PostListResponseDto(post));
-        }
-        return responseList;
+    public Page<PostListResponseDto> getPostList(int page, int size, String sortBy, boolean isAsc) {
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy);
+        Pageable pageable = PageRequest.of(page,size,sort);
+
+        Page<Post> postList;
+        postList = postRepository.findAllByOrderByCreatedAtDesc(pageable);
+        return postList.map(PostListResponseDto::new);
     }
 
     public PostResponseDto getPost(Long id) {

@@ -4,6 +4,7 @@ import com.sparta.plusproject.global.CommonResponseDto;
 import com.sparta.plusproject.global.security.UserDetailsImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,8 +30,12 @@ public class PostController {
     }
 
     @GetMapping
-    public List<PostListResponseDto> getPostList(){
-         return  postService.getPostList();
+    public Page<PostListResponseDto> getPostList(
+            @RequestParam("page") int page,
+            @RequestParam("size") int size,
+            @RequestParam("sortBy") String sortBy,
+            @RequestParam("isAsc") boolean isAsc){
+         return  postService.getPostList(page-1, size, sortBy, isAsc);
     }
 
     @GetMapping("/{id}")
