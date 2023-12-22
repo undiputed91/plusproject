@@ -29,4 +29,13 @@ public class CommentService {
         }
         comment.update(commentRequestDto);
     }
+
+    public void deleteComment(Long id, Long commentId, UserDetailsImpl userDetails) {
+        Post post = postRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 게시글이 없습니다."));
+        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException("해당 댓글이 없습니다."));
+        if(!Objects.equals(comment.getUser().getId(), userDetails.getUser().getId())){
+            throw new IllegalArgumentException("댓글 작성자만 삭제 가능합니다.");
+        }
+        commentRepository.delete(comment);
+    }
 }
