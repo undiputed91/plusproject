@@ -30,7 +30,7 @@ public class Post extends Timestamped {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.PERSIST,orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
     public Post(PostRequestDto postRequestDto, UserDetailsImpl userDetails) {
