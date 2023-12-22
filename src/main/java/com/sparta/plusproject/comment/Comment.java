@@ -36,4 +36,9 @@ public class Comment {
         this.likes = commentRequestDto.isLikes();
         this.user = userDetails.getUser();
     }
+
+    public void update(CommentRequestDto commentRequestDto) {
+        this.contents = commentRequestDto.getContents();
+        this.likes = commentRequestDto.isLikes();
+    }
 }
