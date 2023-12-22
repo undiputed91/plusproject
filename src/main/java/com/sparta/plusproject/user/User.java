@@ -30,8 +30,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Comment> comments = new ArrayList<>();
 
-    public User(UserRequestDto userRequestDto) {
+    public User(UserRequestDto userRequestDto,String encodedPassword) {
         this.username = userRequestDto.getUsername();
-        this.password = userRequestDto.getPassword();
+        this.password = encodedPassword;
     }
 }
