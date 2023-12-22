@@ -2,7 +2,6 @@ package com.sparta.plusproject.post;
 
 import com.sparta.plusproject.comment.Comment;
 import com.sparta.plusproject.comment.CommentRepository;
-import com.sparta.plusproject.comment.CommentResponseDto;
 import com.sparta.plusproject.global.security.UserDetailsImpl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -12,8 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 @Service

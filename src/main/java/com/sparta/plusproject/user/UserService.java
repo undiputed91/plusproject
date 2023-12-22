@@ -40,7 +40,9 @@ public class UserService {
         if (!passwordEncoder.matches(userRequestDto.getPassword(), user.getPassword())) {
             throw new IllegalArgumentException("닉네임 또는 패스워드를 확인해주세요");
         }
-        httpServletResponse.addHeader(jwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(userRequestDto.getUsername()));
+//        httpServletResponse.addHeader(jwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(userRequestDto.getUsername()));
+        String token = jwtUtil.createToken(userRequestDto.getUsername());
+        jwtUtil.addJwtToCookie(token,httpServletResponse);
     }
 
 
