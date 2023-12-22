@@ -39,8 +39,13 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public PostResponseDto getPost(@PathVariable Long id){
-        return postService.getPost(id);
+    public PostResponseDto getPost(
+            @PathVariable Long id,
+            @RequestParam("page") int page,
+            @RequestParam("size") int size,
+            @RequestParam("sortBy") String sortBy,
+            @RequestParam("isAsc") boolean isAsc){
+        return postService.getPost(id,page-1,size,sortBy,isAsc);
     }
 
     @PatchMapping("/{id}")

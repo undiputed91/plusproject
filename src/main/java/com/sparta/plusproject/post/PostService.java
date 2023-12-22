@@ -37,15 +37,17 @@ public class PostService {
         return postList.map(PostListResponseDto::new);
     }
 
-    public PostResponseDto getPost(Long id) {
+    public PostResponseDto getPost(Long id, int page, int size, String sortBy, boolean isAsc) {
         Post post = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 
-        List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
-        List<Comment> commentList = commentRepository.findAllByPostId(id);
-        for (Comment comment : commentList) {
-            commentResponseDtoList.add(new CommentResponseDto(comment));
-        }
-        return new PostResponseDto(post, commentResponseDtoList);
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy);
+        Pageable pageable = PageRequest.of(page,size,sort);
+
+        Page<Comment> commentList;
+        commentList = commentRepository.findAllByPostId(id,pageable);
+
+        return new PostResponseDto(post, commentList);
     }
 
     @Transactional
