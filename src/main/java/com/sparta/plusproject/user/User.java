@@ -1,5 +1,6 @@
 package com.sparta.plusproject.user;
 
+import com.sparta.plusproject.comment.Comment;
 import com.sparta.plusproject.post.Post;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -25,6 +26,9 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Post> posts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments = new ArrayList<>();
 
     public User(UserRequestDto userRequestDto) {
         this.username = userRequestDto.getUsername();
