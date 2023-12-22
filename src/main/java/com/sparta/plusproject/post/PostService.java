@@ -1,5 +1,8 @@
 package com.sparta.plusproject.post;
 
+import com.sparta.plusproject.comment.Comment;
+import com.sparta.plusproject.comment.CommentRepository;
+import com.sparta.plusproject.comment.CommentResponseDto;
 import com.sparta.plusproject.global.security.UserDetailsImpl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +16,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
+    private final CommentRepository commentRepository;
     public void writePost(PostRequestDto postRequestDto, UserDetailsImpl userDetails) {
         Post post = new Post(postRequestDto,userDetails);
         postRepository.save(post);
@@ -29,7 +33,13 @@ public class PostService {
 
     public PostResponseDto getPost(Long id) {
         Post post = postRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 게시글이 없습니다."));
-        return new PostResponseDto(post);
+
+        List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
+        List<Comment> commentList = commentRepository.findAllByPostId(id);
+        for (Comment comment : commentList) {
+            commentResponseDtoList.add(new CommentResponseDto(comment));
+        }
+        return new PostResponseDto(post,commentResponseDtoList);
     }
 
     @Transactional
